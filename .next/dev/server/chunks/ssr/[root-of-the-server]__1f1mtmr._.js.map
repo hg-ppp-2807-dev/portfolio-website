@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///Users/pritampriyabratapalai/Downloads/pritam-portfolio/app/intent-scope/page.tsx"],"sourcesContent":["import { redirect } from \"next/navigation\";\n\nexport default function Redirect() {\n  redirect(\"/#projects\");\n}\n"],"names":["Redirect"],"mappings":";;;;AAAA;AAAA;;AAEe,SAASA;IACtB,IAAA,iMAAQ,EAAC;AACX"}}]
+}

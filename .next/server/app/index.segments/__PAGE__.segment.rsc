@@ -1,0 +1,23 @@
+1:"$Sreact.fragment"
+2:I[70119,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/0owl3delmase3.js","/_next/static/chunks/3l27ua5bwz_px.js"],"default"]
+3:I[92349,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/0owl3delmase3.js","/_next/static/chunks/3l27ua5bwz_px.js"],"default"]
+4:I[12335,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/0owl3delmase3.js","/_next/static/chunks/3l27ua5bwz_px.js"],"default"]
+5:I[58267,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/0owl3delmase3.js","/_next/static/chunks/3l27ua5bwz_px.js"],"default"]
+6:I[35203,["/_next/static/chunks/3fntmmi971322.js","/_next/static/chunks/0owl3delmase3.js","/_next/static/chunks/3l27ua5bwz_px.js"],"default"]
+7:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"OutletBoundary"]
+8:"$Sreact.suspense"
+c:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"ViewportBoundary"]
+d:I[97367,["/_next/static/chunks/3fntmmi971322.js"],"MetadataBoundary"]
+f:I[39756,["/_next/static/chunks/3fntmmi971322.js"],"default"]
+10:I[37457,["/_next/static/chunks/3fntmmi971322.js"],"default"]
+:HL["/_next/static/chunks/2mh4sscq_gade.css","style"]
+b:X
+0:{"buildId":"WlpcsSpaj1QyX-P0jNPwj","data":[{"rsc":["$","$1","c",{"children":[[["$","$L2",null,{}],["$","$L3",null,{}],["$","$L4",null,{}],["$","$L5",null,{}],["$","$L6",null,{}]],[["$","script","script-0",{"src":"/_next/static/chunks/0owl3delmase3.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/3l27ua5bwz_px.js","async":true}]],["$","$L7",null,{"children":["$","$8",null,{"name":"Next.MetadataOutlet","children":"$@9"}]}]]}],"isPartial":"$@a","staleTime":"$b","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$Lc",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$Ld",null,{"children":["$","$8",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Pritam Priyabrata Palai — Software Engineer"}],["$","meta","1",{"name":"description","content":"Portfolio of Pritam Priyabrata Palai — AI, backend systems, distributed systems and full-stack engineering."}]]}]}]}],null]}],"isPartial":"$@e","staleTime":"$b","varyParams":null},{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2mh4sscq_gade.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/3fntmmi971322.js","async":true}]],["$","html",null,{"lang":"en","children":["$","body",null,{"children":["$","$Lf",null,{"parallelRouterKey":"children","template":["$","$L10",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]}]}]]}],"isPartial":"$@11","staleTime":"$b","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@12","rootVaryParams":null,"needsRuntimeRequest":"$@13"}
+9:null
+b:300
+13:true
+b:C
+12:0
+e:"$undefined"
+11:"$undefined"
+a:"$undefined"
