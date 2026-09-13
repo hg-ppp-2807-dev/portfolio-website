@@ -91,7 +91,7 @@ button {
     gap: 28px;
 
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .desktop-nav a {
@@ -185,9 +185,14 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 
     letter-spacing: 0.12em;
+}
+
+.hero-fullbleed .hero-eyebrow,
+.hero-fullbleed .hero-fb-top {
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .hero-title {
@@ -197,9 +202,9 @@ button {
 
     flex-direction: column;
 
-    font-size: clamp(72px,
-            9vw,
-            150px);
+    font-size: clamp(56px,
+            11vw,
+            180px);
 
     line-height: 0.82;
 
@@ -207,7 +212,7 @@ button {
 
     font-weight: 800;
 
-    background: linear-gradient(135deg, #ffffff 40%, #b8a3ff 100%);
+    background: linear-gradient(135deg, #ffffff 40%, #e85d00 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -250,7 +255,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 
     transition:
         transform 0.2s ease,
@@ -261,7 +266,7 @@ button {
 .hero-button:hover {
     transform: translate(2px, 2px);
     box-shadow: 2px 2px 0 var(--border);
-    background: var(--violet);
+    background: #e85d00;
     color: #ffffff;
 }
 
@@ -309,7 +314,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
     letter-spacing: 0.08em;
 }
@@ -361,7 +366,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .status-active {
@@ -371,7 +376,7 @@ button {
 
     gap: 8px;
 
-    font-size: 8px;
+    font-size: 11px;
 
     color: #5c6b00;
 }
@@ -440,7 +445,7 @@ button {
 .system-metrics span {
     font-family: "DM Mono", monospace;
 
-    font-size: 8px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -462,7 +467,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .terminal-output>span:first-child {
@@ -512,7 +517,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 8px;
+    font-size: 11px;
 
     letter-spacing: 0.08em;
 
@@ -541,7 +546,7 @@ button {
     }
 
     .hero-title {
-        font-size: clamp(26px, 8vw, 60px);
+        font-size: clamp(22px, 8vw, 56px);
         white-space: normal;
         overflow-wrap: break-word;
         word-break: break-word;
@@ -566,7 +571,7 @@ button {
 
     .hero-title {
         /* Keeps each word on its own line and safely fits narrow screens */
-        font-size: clamp(20px, 7.5vw, 36px);
+        font-size: clamp(16px, 7vw, 32px);
         white-space: normal;
         word-break: break-word;
         overflow-wrap: break-word;
@@ -588,6 +593,184 @@ button {
         font-size: 20px;
     }
 }
+
+/* =========================================================
+   HERO — FOLIOBLOX STYLE (clean rebuild)
+   ========================================================= */
+
+/* Section: photo as background-image, overlay via ::before */
+.hero-fb-section {
+    position: relative;
+    min-height: 100vh;
+    width: min(calc(100% - 32px), 1500px);
+    margin: 16px auto 0;
+
+    /* Your photo */
+    background: url('/pritam-hero.jpg') center center / cover no-repeat #000;
+
+    isolation: isolate;
+}
+
+/* Overlay: subtle bottom fade */
+.hero-fb-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.0) 40%);
+    pointer-events: none;
+}
+
+/* Inner content wrapper — sits naturally above ::before */
+.hero-fb-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 100vh;
+    padding: 110px 5% 44px;
+    gap: 0;
+}
+
+/* TOP ROW */
+.hero-fb-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.hero-fb-eyebrow {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.hero-fb-tagline {
+    max-width: 340px;
+    text-align: right;
+}
+
+.hero-fb-tagline-title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #ffffff;
+}
+
+.hero-fb-tagline-sub {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* BIG TITLE — white with red glow */
+.hero-fb-title {
+    margin: 0 0 36px;
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(72px, 11vw, 170px);
+    font-weight: 800;
+    line-height: 0.82;
+    letter-spacing: -0.06em;
+    color: #ffffff;
+}
+
+/* SKILLS ROW */
+.hero-fb-skills {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: 1px solid rgba(255, 255, 255, 0.14);
+    margin-bottom: 28px;
+}
+
+.hero-fb-skill {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    transition: background 0.2s ease;
+}
+
+.hero-fb-skill:hover {
+    background: rgba(217, 11, 11, 0.15);
+}
+
+.hero-fb-skill-num {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    color: #ff3333;
+    letter-spacing: 0.05em;
+}
+
+.hero-fb-skill-label {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    color: #ffffff;
+    letter-spacing: 0.03em;
+}
+
+/* CTA button */
+.hero-fb-cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    padding: 13px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    backdrop-filter: blur(4px);
+}
+
+.hero-fb-cta:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.15);
+    background: #D90B0B;
+    border-color: #D90B0B;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .hero-fb-top {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .hero-fb-tagline {
+        text-align: left;
+    }
+
+    .hero-fb-skills {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 560px) {
+    .hero-fb-skills {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-fb-tagline {
+        display: none;
+    }
+
+    .hero-fb-title {
+        font-size: clamp(48px, 13vw, 90px);
+    }
+}
+
 
 /* =========================================================
    INTENTSCOPE PROJECT
@@ -625,7 +808,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
     letter-spacing: 0.1em;
 }
@@ -656,7 +839,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -720,7 +903,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 
     letter-spacing: 0.05em;
 }
@@ -745,7 +928,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
     border: 2px solid var(--border);
     box-shadow: 4px 4px 0 var(--border);
@@ -807,7 +990,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 8px;
+    font-size: 11px;
 
     letter-spacing: 0.1em;
 
@@ -870,7 +1053,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 }
 
 .architecture-node strong {
@@ -878,7 +1061,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .architecture-node small {
@@ -890,7 +1073,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 }
 
 .architecture-line {
@@ -932,7 +1115,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -965,7 +1148,7 @@ button {
 .provider-card>span {
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -979,7 +1162,7 @@ button {
 .provider-card small {
     font-family: "DM Mono", monospace;
 
-    font-size: 6px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -993,7 +1176,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 6px;
+    font-size: 11px;
 }
 
 .provider-status i {
@@ -1102,7 +1285,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
     letter-spacing: 0.1em;
 }
@@ -1131,7 +1314,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -1191,7 +1374,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 }
 
 .coach-actions {
@@ -1224,7 +1407,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 8px;
+    font-size: 11px;
 
     letter-spacing: 0.08em;
 }
@@ -1258,7 +1441,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 8px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -1306,7 +1489,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 10px;
+    font-size: 11px;
 }
 
 /* DIVIDER */
@@ -1338,7 +1521,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 }
 
 .skill-header span:last-child {
@@ -1378,7 +1561,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -1406,7 +1589,7 @@ button {
 
     font-family: "DM Mono", monospace;
 
-    font-size: 7px;
+    font-size: 11px;
 }
 
 .interview-status strong {
@@ -1454,7 +1637,7 @@ button {
 .coach-module-number {
     font-family: "DM Mono", monospace;
 
-    font-size: 9px;
+    font-size: 11px;
 
     color: var(--muted);
 }
@@ -1596,7 +1779,7 @@ button {
 .experience-section>span,
 .contact-section>span {
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.1em;
 }
 
@@ -1681,7 +1864,7 @@ button {
     justify-content: space-between;
 
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.08em;
 }
 
@@ -1729,7 +1912,7 @@ button {
     border: 1px solid var(--border);
 
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
 }
 
 .project-copy a {
@@ -1737,7 +1920,7 @@ button {
     gap: 18px;
 
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
 
     border-bottom: 1px solid currentColor;
@@ -1775,7 +1958,7 @@ button {
     border: 1px solid var(--border);
 
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
 
     background: white;
 }
@@ -1820,7 +2003,7 @@ button {
     background: var(--surface);
 
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
 }
 
 /* OFFERVAULT */
@@ -1840,7 +2023,7 @@ button {
     border: 1px solid var(--border);
 
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
 
     background: white;
 }
@@ -1890,7 +2073,7 @@ button {
     margin-bottom: 50px;
 
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
 }
 
 .engineering-grid p {
@@ -1921,7 +2104,7 @@ button {
 .experience-item>div:first-child,
 .experience-item>div:last-child {
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .experience-item h3 {
@@ -2165,7 +2348,7 @@ button {
     display: block;
     margin-bottom: 12px;
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     color: var(--muted);
 }
@@ -2180,7 +2363,7 @@ button {
 .preset-btn {
     padding: 8px 14px;
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.05em;
     background: transparent;
     border: 1px solid var(--border);
@@ -2209,7 +2392,7 @@ button {
     flex-grow: 1;
     padding: 10px 14px;
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     background: transparent;
     border: 1px solid var(--border);
     color: var(--text);
@@ -2228,7 +2411,7 @@ button {
 .run-btn {
     padding: 10px 20px;
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     background: var(--text);
     color: var(--surface);
@@ -2350,7 +2533,7 @@ button {
     padding: 10px 16px;
     border-bottom: 1px solid #222;
     background: #0c0c0c;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     color: #666;
 }
@@ -2383,7 +2566,7 @@ button {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.5;
 }
 
@@ -2419,7 +2602,7 @@ button {
     padding-top: 10px;
     border-top: 1px dashed #222;
     color: #00e5ff;
-    font-size: 10px;
+    font-size: 11px;
 }
 
 .response-prefix {
@@ -2508,7 +2691,7 @@ button {
     align-items: center;
     gap: 8px;
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.1em;
     color: #666;
     text-decoration: none;
@@ -2603,7 +2786,7 @@ button {
     background: rgba(255, 51, 75, 0.08);
     border: 1px solid rgba(255, 51, 75, 0.24);
     border-radius: 100px;
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.1em;
     color: #FF334B;
@@ -2650,7 +2833,7 @@ button {
 
 .scope-tags span {
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.05em;
     padding: 6px 14px;
@@ -2753,7 +2936,7 @@ button {
     border-bottom: 1px solid #1a1a1a;
     background: rgba(15, 15, 15, 0.5);
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.05em;
     color: #666;
 }
@@ -2824,13 +3007,13 @@ button {
 
 .preset-card-btn strong {
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     color: #ffffff;
     margin-bottom: 4px;
 }
 
 .preset-card-btn small {
-    font-size: 8px;
+    font-size: 11px;
     color: #666666;
 }
 
@@ -2895,7 +3078,7 @@ button {
     background: #080808;
     border-bottom: 1px solid #121212;
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.05em;
     color: #555;
 }
@@ -2919,7 +3102,7 @@ button {
     max-height: 240px;
     overflow-y: auto;
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.6;
     display: flex;
     flex-direction: column;
@@ -3009,7 +3192,7 @@ button {
 .flow-node-text strong {
     display: block;
     font-family: "DM Mono", monospace;
-    font-size: 10px;
+    font-size: 11px;
     color: #888;
 }
 
@@ -3019,7 +3202,7 @@ button {
 
 .flow-node-text small {
     display: block;
-    font-size: 8px;
+    font-size: 11px;
     color: #444;
 }
 
@@ -3044,7 +3227,7 @@ button {
 .mini-label {
     display: block;
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.05em;
     color: #444444;
     margin-bottom: 12px;
@@ -3070,7 +3253,7 @@ button {
 
 .dash-prov-card span {
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     color: #555555;
 }
 
@@ -3082,7 +3265,7 @@ button {
 
 .dash-prov-card small {
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     color: #444444;
 }
 
@@ -3091,7 +3274,7 @@ button {
     align-items: center;
     gap: 6px;
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     color: #555;
 }
 
@@ -3237,7 +3420,7 @@ button {
     border: 1px solid #141414;
     border-radius: 3px;
     font-family: "DM Mono", monospace;
-    font-size: 8px;
+    font-size: 11px;
     letter-spacing: 0.02em;
     color: #444;
     padding: 3px 0;
@@ -3296,7 +3479,7 @@ button {
 .mockup-nav-links {
     display: flex;
     gap: 12px;
-    font-size: 7px;
+    font-size: 11px;
     color: #444;
     font-family: "DM Mono", monospace;
 }
@@ -3307,7 +3490,7 @@ button {
     border-radius: 3px;
     color: #ffffff;
     font-weight: 600;
-    font-size: 7px;
+    font-size: 11px;
     box-shadow: 0 0 10px rgba(255, 51, 75, 0.25);
 }
 
@@ -3335,7 +3518,7 @@ button {
     background: rgba(255, 51, 75, 0.06);
     border: 1px solid rgba(255, 51, 75, 0.2);
     border-radius: 100px;
-    font-size: 6px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.05em;
     color: #FF334B;
@@ -3372,7 +3555,7 @@ button {
 }
 
 .mockup-subtitle {
-    font-size: 9px;
+    font-size: 11px;
     line-height: 1.5;
     color: #555;
     max-width: 290px;
@@ -3424,7 +3607,7 @@ button {
 
 .mockup-btn {
     padding: 6px 14px;
-    font-size: 7px;
+    font-size: 11px;
     font-weight: 600;
     border-radius: 2px;
 }
@@ -3553,7 +3736,7 @@ button {
 
 .cert-provider {
     font-family: "DM Mono", monospace;
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 700;
     color: var(--violet);
     border: 1px solid var(--violet);
@@ -3661,7 +3844,7 @@ button {
     }
 
     .mockup-subtitle {
-        font-size: 8px;
+        font-size: 11px;
     }
 
     .tag {
@@ -3766,5 +3949,160 @@ button {
 @media (max-width: 900px) {
     .hamburger-button {
         display: flex;
+    }
+}
+
+/* =========================================================
+   EDITORIAL HERO
+   ========================================================= */
+
+.ed-section {
+    width: min(calc(100% - 32px), 1500px);
+    margin: 32px auto;
+    padding: 0;
+}
+
+.ed-card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP BAR */
+.ed-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+}
+
+.ed-bar-bottom {
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+}
+
+.ed-brand {
+    font-weight: 500;
+}
+
+.ed-year {
+    color: var(--muted);
+}
+
+.ed-nav {
+    display: flex;
+    gap: 24px;
+}
+
+.ed-nav a {
+    color: var(--muted);
+    transition: color 0.2s ease;
+}
+
+.ed-nav a:hover {
+    color: var(--text);
+}
+
+/* PHOTO */
+.ed-photo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    overflow: hidden;
+}
+
+.ed-photo {
+    object-fit: cover;
+    object-position: center 20%;
+    filter: grayscale(18%) contrast(1.05);
+    transition: transform 0.6s ease;
+}
+
+.ed-card:hover .ed-photo {
+    transform: scale(1.02);
+}
+
+/* NAME OVERLAY */
+.ed-name-overlay {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    display: flex;
+    flex-direction: column;
+    line-height: 0.82;
+    gap: 0;
+    pointer-events: none;
+}
+
+.ed-name {
+    display: block;
+    font-size: clamp(40px, 7vw, 110px);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 40%, rgba(98, 70, 255, 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    mix-blend-mode: screen;
+}
+
+/* BOTTOM BAR */
+.ed-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.ed-roles span:first-child {
+    color: var(--text);
+    font-weight: 500;
+}
+
+.ed-resume-link {
+    font-family: "DM Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--violet);
+    border: 1px solid var(--violet);
+    padding: 8px 14px;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.ed-resume-link:hover {
+    background: var(--violet);
+    color: #fff;
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+    .ed-photo-wrap {
+        aspect-ratio: 4 / 3;
+    }
+
+    .ed-nav {
+        display: none;
+    }
+
+    .ed-year {
+        display: none;
+    }
+
+    .ed-name {
+        font-size: clamp(28px, 10vw, 56px);
+    }
+
+    .ed-name-overlay {
+        bottom: 16px;
+        left: 16px;
     }
 }

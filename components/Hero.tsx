@@ -2,167 +2,77 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import dynamic from "next/dynamic";
-
-const HeroBackground = dynamic(() => import("./HeroBackground"), { ssr: false });
 
 export default function Hero() {
     const heroRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                defaults: {
-                    ease: "power4.out",
-                },
-            });
+        const el = heroRef.current;
+        if (!el) return;
 
-            tl.from(".hero-eyebrow", {
-                opacity: 0,
-                y: 20,
-                duration: 0.7,
-            })
-                .from(
-                    ".hero-line",
-                    {
-                        opacity: 0,
-                        y: 70,
-                        duration: 0.9,
-                        stagger: 0.12,
-                    },
-                    "-=0.35"
-                )
-                .from(
-                    ".hero-description",
-                    {
-                        opacity: 0,
-                        y: 25,
-                        duration: 0.7,
-                    },
-                    "-=0.45"
-                )
-                .from(
-                    ".hero-button",
-                    {
-                        opacity: 0,
-                        y: 20,
-                        duration: 0.6,
-                    },
-                    "-=0.35"
-                )
-                .from(
-                    ".system-panel",
-                    {
-                        opacity: 0,
-                        x: 80,
-                        scale: 0.96,
-                        duration: 1,
-                    },
-                    "-=0.7"
-                );
-        }, heroRef);
+        // Set initial states manually so there's no flash of invisible text
+        const top   = el.querySelector<HTMLElement>(".hero-fb-top");
+        const lines = el.querySelectorAll<HTMLElement>(".hero-line");
+        const skills= el.querySelectorAll<HTMLElement>(".hero-fb-skill");
+        const cta   = el.querySelector<HTMLElement>(".hero-fb-cta");
 
-        return () => ctx.revert();
+        gsap.set([top, lines, skills, cta], { opacity: 0 });
+
+        const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+        tl.to(top,    { opacity: 1, y: 0, duration: 0.7, delay: 0.1 })
+          .to(lines,  { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, "-=0.35")
+          .to(skills, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08 }, "-=0.4")
+          .to(cta,    { opacity: 1, y: 0, duration: 0.5 }, "-=0.3");
+
+        return () => { tl.kill(); };
     }, []);
 
     return (
-        <section ref={heroRef} className="hero">
-            <HeroBackground />
-            <div className="hero-grid" />
+        <section ref={heroRef} className="hero-fb-section">
 
-            <div className="hero-content">
-                <div className="hero-copy">
-                    <div className="hero-eyebrow">
-                        PRITAM / SYSTEMS / 2026
-                    </div>
+            {/* ── MAIN CONTENT (always on top) ── */}
+            <div className="hero-fb-inner">
 
-                    <h1 className="hero-title">
-                        <span className="hero-line">SOFTWARE</span>
-                        <span className="hero-line">ENGINEER</span>
-                    </h1>
-
-                    <p className="hero-description">
-                        I build intelligent backend systems,
-                        distributed architectures and
-                        AI-powered products.
-                    </p>
-
-                    <a href="#projects" className="hero-button">
-                        VIEW WORK
-                        <span>↗</span>
-                    </a>
-                </div>
-
-                <div className="system-panel">
-                    <div className="system-panel-header">
-                        <span>PRITAM / SYSTEMS</span>
-                        <span>01</span>
-                    </div>
-
-                    <div className="system-panel-body">
-                        <div className="terminal-line">
-                            <span className="terminal-prompt">$</span>
-                            system.status()
-                        </div>
-
-                        <div className="system-status">
-                            <Status label="API GATEWAY" />
-                            <Status label="AI ENGINE" />
-                            <Status label="DATABASE" />
-                            <Status label="DOCKER" />
-                        </div>
-
-                        <div className="system-divider" />
-
-                        <div className="system-metrics">
-                            <div>
-                                <span>PROJECTS</span>
-                                <strong>02</strong>
-                            </div>
-
-                            <div>
-                                <span>SYSTEMS</span>
-                                <strong>04</strong>
-                            </div>
-
-                            <div>
-                                <span>STACK</span>
-                                <strong>12+</strong>
-                            </div>
-                        </div>
-
-                        <div className="terminal-output">
-                            <span>&gt;</span>
-                            building intelligent systems...
-                            <span className="cursor" />
-                        </div>
-                    </div>
-
-                    <div className="system-panel-footer">
-                        <span>AI / BACKEND / SYSTEMS</span>
-                        <span>● ACTIVE</span>
+                {/* TOP ROW */}
+                <div className="hero-fb-top">
+                    <div className="hero-fb-eyebrow">HEY, I&apos;M A</div>
+                    <div className="hero-fb-tagline">
+                        <p className="hero-fb-tagline-title">Great systems should feel invisible.</p>
+                        <p className="hero-fb-tagline-sub">
+                            From APIs to AI pipelines, I build backends
+                            that connect and scale.
+                        </p>
                     </div>
                 </div>
-            </div>
 
-            <div className="hero-footer">
-                <span>BENGALURU / INDIA</span>
-                <span>SCROLL TO EXPLORE ↓</span>
-                <span>AI / BACKEND / DISTRIBUTED SYSTEMS</span>
+                {/* BIG TITLE */}
+                <h1 className="hero-fb-title">
+                    <span className="hero-line">SOFTWARE</span>
+                    <span className="hero-line">ENGINEER</span>
+                </h1>
+
+                {/* SKILLS ROW */}
+                <div className="hero-fb-skills">
+                    {[
+                        ["01", "Backend Architecture"],
+                        ["02", "AI / LLM Gateway"],
+                        ["03", "Distributed Systems"],
+                        ["04", "ML Pipelines"],
+                    ].map(([num, label]) => (
+                        <div key={num} className="hero-fb-skill">
+                            <span className="hero-fb-skill-num">#{num}</span>
+                            <span className="hero-fb-skill-label">{label}</span>
+                        </div>
+                    ))}
+                </div>
+
+                {/* CTA */}
+                <a href="#projects" className="hero-fb-cta">
+                    VIEW WORK <span>↗</span>
+                </a>
+
             </div>
         </section>
-    );
-}
-
-function Status({ label }: { label: string }) {
-    return (
-        <div className="status-row">
-            <span>{label}</span>
-
-            <span className="status-active">
-                <i />
-                ONLINE
-            </span>
-        </div>
     );
 }
