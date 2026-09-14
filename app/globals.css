@@ -45,9 +45,14 @@ html {
 
 body {
     margin: 0;
-    background: var(--bg);
+    /* Black behind hero so transparent nav has no gap colour */
+    background: #000;
     color: var(--text);
     font-family: "Inter", sans-serif;
+}
+
+:root[data-theme="light"] body {
+    background: var(--bg);
 }
 
 a {
@@ -59,36 +64,71 @@ button {
     font: inherit;
 }
 
+/* ─── Header: transparent over hero, dark-blurred when scrolled ─── */
 .site-header {
     position: fixed;
     z-index: 100;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
 
-    width: min(calc(100% - 32px), var(--max-width));
-
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
 
-    padding: 14px 18px;
+    padding: 26px 5%;
 
-    background: var(--header-bg);
-    backdrop-filter: blur(18px);
+    /* Default: fully transparent — photo shows through */
+    background: transparent;
+    border-bottom: none;
+    backdrop-filter: none;
 
-    border: 1px solid var(--border);
+    transition:
+        background  0.45s ease,
+        padding     0.35s ease,
+        backdrop-filter 0.45s ease,
+        border-color 0.45s ease;
+}
+
+/* Transparent state — floating over hero */
+.site-header--transparent {
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.site-header--transparent .brand,
+.site-header--transparent .desktop-nav a {
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.site-header--transparent .theme-button {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* Scrolled state — dark blurred floating bar */
+.site-header--scrolled {
+    background: rgba(6, 6, 9, 0.88);
+    backdrop-filter: blur(16px) saturate(1.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 18px 5%;
+    color: var(--text);
+}
+
+:root[data-theme="light"] .site-header--scrolled {
+    background: rgba(243, 242, 237, 0.92);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
 .brand {
     font-family: "DM Mono", monospace;
     font-size: 12px;
     font-weight: 500;
+    flex-shrink: 0;
 }
 
 .desktop-nav {
     display: flex;
     gap: 28px;
+    margin: 0 auto;          /* centre between brand and actions */
 
     font-family: "DM Mono", monospace;
     font-size: 11px;
@@ -103,8 +143,6 @@ button {
 }
 
 .theme-button {
-    justify-self: end;
-
     width: 30px;
     height: 30px;
 
@@ -595,182 +633,565 @@ button {
 }
 
 /* =========================================================
-   HERO — FOLIOBLOX STYLE (clean rebuild)
+   HERO — CINEMATIC CANVAS  (one continuous composition)
    ========================================================= */
 
-/* Section: photo as background-image, overlay via ::before */
+/* ── Section: full-bleed, no margin ── */
 .hero-fb-section {
     position: relative;
-    min-height: 100vh;
-    width: min(calc(100% - 32px), 1500px);
-    margin: 16px auto 0;
-
-    /* Your photo */
-    background: url('/pritam-hero.jpg') center center / cover no-repeat #000;
-
+    width: 100%;
+    min-height: 100svh;
+    margin: 0;
+    padding-top: 0;
+    overflow: hidden;
     isolation: isolate;
+    background: #000;
+    /* Ensure it sits flush at the very top — no body gap */
+    margin-top: 0 !important;
 }
 
-/* Overlay: subtle bottom fade */
+/* ── Parallax photo layer (JS-driven transform) ── */
+.hero-fb-bg {
+    position: absolute;
+    inset: -5%;
+    width: 110%;
+    height: 110%;
+    background: url('/pritam-hero.jpg') center center / cover no-repeat;
+    filter: brightness(0.68);
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* ── Cinematic gradient overlay:
+       heavy bottom + subtle left + subtle top darkening ── */
 .hero-fb-section::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.0) 40%);
+    z-index: 1;
+    background:
+        linear-gradient(to top,  rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.20) 40%, transparent 65%),
+        linear-gradient(to right, rgba(0,0,0,0.40) 0%, transparent 45%),
+        linear-gradient(to bottom, rgba(0,0,0,0.30) 0%, transparent 18%);
     pointer-events: none;
 }
 
-/* Inner content wrapper — sits naturally above ::before */
-.hero-fb-inner {
+/* ── Architectural grid overlay — barely visible (~4%) ── */
+.hero-fb-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 88px 88px;
+}
+
+/* ════════════════════════════════════════
+   HERO CANVAS — content layer
+════════════════════════════════════════ */
+.hero-canvas {
     position: relative;
+    z-index: 3;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    min-height: 100vh;
-    padding: 110px 5% 44px;
-    gap: 0;
 }
 
-/* TOP ROW */
-.hero-fb-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 16px;
-    color: rgba(255, 255, 255, 0.75);
-}
-
-.hero-fb-eyebrow {
+/* ── Shared annotation base ── */
+.hero-annotation {
+    position: absolute;
     font-family: "DM Mono", monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    color: rgba(255, 255, 255, 0.65);
+    font-size: 10px;
+    letter-spacing: 0.12em;
 }
 
-.hero-fb-tagline {
-    max-width: 340px;
+/* Top-left: ● SYSTEMS ONLINE */
+.hero-annotation--tl {
+    top: 88px;
+    left: 5%;
+}
+
+/* Top-right: SOFTWARE ENGINEER / AI SYSTEMS */
+.hero-annotation--tr {
+    top: 88px;
+    right: 5%;
     text-align: right;
 }
 
-.hero-fb-tagline-title {
-    margin: 0 0 8px;
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 1.3;
-    color: #ffffff;
+/* ════════════════════════════════════════
+   STATUS INDICATOR
+════════════════════════════════════════ */
+.hero-status {
+    color: rgba(255, 255, 255, 0.48);
+    display: flex;
+    align-items: center;
+    gap: 7px;
 }
 
-.hero-fb-tagline-sub {
+.hero-status--init {
+    color: rgba(255, 255, 255, 0.30);
+    animation: hero-status-flicker 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes hero-status-flicker {
+    from { opacity: 0.45; }
+    to   { opacity: 1;    }
+}
+
+.hero-status--online::before {
+    content: '●';
+    color: #D90B0B;
+    font-size: 7px;
+    animation: hero-dot-pulse 2.4s ease-in-out infinite;
+}
+
+/* ════════════════════════════════════════
+   LOCATION / CONTEXT
+════════════════════════════════════════ */
+.hero-location {
+    color: rgba(255, 255, 255, 0.32);
+}
+
+/* ════════════════════════════════════════
+   EDITORIAL TAGLINE  (upper-right)
+════════════════════════════════════════ */
+.hero-tagline-block {
+    position: absolute;
+    top: 118px;
+    right: 5%;
+    text-align: right;
+    max-width: 260px;
+}
+
+.hero-tagline-headline {
+    margin: 0 0 10px;
+    font-family: "Inter", sans-serif;
+    font-size: clamp(15px, 1.5vw, 20px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.hero-tagline-sub {
     margin: 0;
-    font-size: 13px;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.55);
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.40);
 }
 
-/* BIG TITLE — white with red glow */
-.hero-fb-title {
-    margin: 0 0 36px;
+/* ════════════════════════════════════════
+   SYSTEM DIAGRAM  (absolute, upper-right)
+════════════════════════════════════════ */
+.hero-diagram-wrap {
+    position: absolute;
+    top: 32%;
+    right: 6%;
     display: flex;
     flex-direction: column;
-    font-size: clamp(72px, 11vw, 170px);
-    font-weight: 800;
-    line-height: 0.82;
-    letter-spacing: -0.06em;
-    color: #ffffff;
-}
-
-/* SKILLS ROW */
-.hero-fb-skills {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    border-left: 1px solid rgba(255, 255, 255, 0.14);
-    margin-bottom: 28px;
-}
-
-.hero-fb-skill {
-    display: flex;
-    flex-direction: column;
+    align-items: flex-end;
     gap: 8px;
-    padding: 16px 20px;
-    border-right: 1px solid rgba(255, 255, 255, 0.14);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-    transition: background 0.2s ease;
+    opacity: 0.9;
+    transition: transform 0.1s linear;
+    pointer-events: none;
 }
 
-.hero-fb-skill:hover {
-    background: rgba(217, 11, 11, 0.15);
+.hero-diagram-canvas {
+    display: block;
+    /* Canvas is already 108×152 — no additional sizing needed */
 }
 
-.hero-fb-skill-num {
+.hero-diagram-labels {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-family: "DM Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.12);
+}
+
+/* ════════════════════════════════════════
+   BOTTOM CONTENT  (main editorial block)
+════════════════════════════════════════ */
+.hero-bottom {
+    margin-top: auto;         /* push to bottom */
+    padding: 0 5% 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+/* ── Eyebrow ── */
+.hero-eyebrow {
     font-family: "DM Mono", monospace;
     font-size: 11px;
-    color: #ff3333;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 12px;
 }
 
-.hero-fb-skill-label {
-    font-family: "DM Mono", monospace;
-    font-size: 11px;
+/* ════════════════════════════════════════
+   BIG TITLE — typewriter
+════════════════════════════════════════ */
+.hero-fb-title {
+    margin: 0 0 28px;
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(60px, 9.5vw, 132px);
+    font-weight: 800;
+    line-height: 0.83;
+    letter-spacing: -0.065em;
     color: #ffffff;
-    letter-spacing: 0.03em;
+    transition: transform 80ms ease, opacity 80ms ease, text-shadow 80ms ease;
 }
 
-/* CTA button */
+/* Glitch — brief, applied via JS */
+.hero-title--glitch {
+    transform: translateX(2px);
+    opacity: 0.87;
+    text-shadow: 1.5px 0 0 rgba(217, 11, 11, 0.42);
+}
+
+.hero-typewriter-line {
+    min-height: 1em;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.hero-typewriter-line2 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+}
+
+/* Red dot cursor */
+.hero-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #D90B0B;
+    margin-left: 14px;
+    flex-shrink: 0;
+    align-self: center;
+    position: relative;
+    top: -3px;
+    animation: hero-dot-pulse 2.1s ease-in-out infinite;
+}
+
+@keyframes hero-dot-pulse {
+    0%, 100% { transform: scale(1);    opacity: 1;   }
+    50%       { transform: scale(1.45); opacity: 0.6; }
+}
+
+/* ════════════════════════════════════════
+   CAPABILITIES INDEX  (thin, no boxes)
+════════════════════════════════════════ */
+.hero-index {
+    display: flex;
+    align-items: flex-start;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    padding-top: 14px;
+    margin-bottom: 20px;
+    gap: 0;
+}
+
+.hero-index-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-right: 16px;
+    position: relative;
+    cursor: default;
+    overflow: hidden;
+}
+
+/* Pipe separator via pseudo-element */
+.hero-index-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 0;
+    height: 100%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.hero-index-num {
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.06em;
+    transition: color 0.18s ease;
+}
+
+.hero-index-item:hover .hero-index-num {
+    color: #D90B0B;
+}
+
+.hero-index-label {
+    font-family: "DM Mono", monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.03em;
+    line-height: 1.3;
+}
+
+/* Descriptor appears on hover */
+.hero-index-desc {
+    font-family: "DM Mono", monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.32);
+    line-height: 1.4;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.18s ease, opacity 0.18s ease;
+}
+
+.hero-index-item:hover .hero-index-desc {
+    max-height: 2em;
+    opacity: 1;
+}
+
+/* ════════════════════════════════════════
+   CURRENT FOCUS
+════════════════════════════════════════ */
+.hero-focus {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: "DM Mono", monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.11em;
+}
+
+.hero-focus-label {
+    color: rgba(255, 255, 255, 0.28);
+}
+
+.hero-focus-value {
+    color: rgba(255, 255, 255, 0.58);
+}
+
+/* ════════════════════════════════════════
+   CTA BUTTON
+════════════════════════════════════════ */
 .hero-fb-cta {
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 20px;
-    padding: 13px 18px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.08);
+    gap: 14px;
+    padding: 11px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: transparent;
     color: #ffffff;
     font-family: "DM Mono", monospace;
     font-size: 11px;
-    letter-spacing: 0.08em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    backdrop-filter: blur(4px);
+    letter-spacing: 0.1em;
+    transition: background 0.22s ease, border-color 0.22s ease;
+    outline-offset: 3px;
 }
 
 .hero-fb-cta:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0 rgba(255, 255, 255, 0.15);
-    background: #D90B0B;
+    background: rgba(217, 11, 11, 0.12);
     border-color: #D90B0B;
 }
 
-/* Responsive */
+.hero-fb-cta:focus-visible {
+    outline: 2px solid #D90B0B;
+}
+
+.hero-cta-arrow {
+    display: inline-block;
+    transition: transform 0.18s ease;
+}
+
+.hero-fb-cta:hover .hero-cta-arrow {
+    transform: translateX(5px);
+}
+
+/* ════════════════════════════════════════
+   SCROLL INDICATOR  (absolute bottom-right)
+════════════════════════════════════════ */
+.hero-scroll-indicator {
+    position: absolute;
+    z-index: 4;
+    bottom: 40px;
+    right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    opacity: 1;
+    transition: opacity 0.55s ease;
+}
+
+.hero-scroll-indicator--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero-scroll-label {
+    font-family: "DM Mono", monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.28);
+    writing-mode: vertical-rl;
+}
+
+.hero-scroll-line {
+    display: block;
+    width: 1px;
+    height: 32px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
+    animation: hero-scroll-drop 2s ease-in-out infinite;
+}
+
+@keyframes hero-scroll-drop {
+    0%   { transform: scaleY(0); transform-origin: top;    opacity: 0; }
+    35%  { transform: scaleY(1); transform-origin: top;    opacity: 1; }
+    65%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════ */
+@media (max-width: 1100px) {
+    .hero-diagram-wrap {
+        top: 28%;
+        right: 4%;
+    }
+
+    .hero-tagline-block {
+        max-width: 220px;
+    }
+}
+
 @media (max-width: 900px) {
-    .hero-fb-top {
+    /* Hide diagram + location on tablet, keep tagline */
+    .hero-diagram-wrap {
+        display: none;
+    }
+
+    .hero-location {
+        display: none;
+    }
+
+    .hero-tagline-block {
+        top: 110px;
+        right: 4%;
+        max-width: 200px;
+    }
+
+    .hero-tagline-headline {
+        font-size: 14px;
+    }
+
+    .hero-tagline-sub {
+        font-size: 11px;
+    }
+
+    .hero-index {
+        flex-wrap: wrap;
+    }
+
+    .hero-index-item {
+        flex: 1 1 calc(50% - 16px);
+        padding-bottom: 10px;
+    }
+
+    .hero-index-item:nth-child(2)::after {
+        display: none;
+    }
+
+    .hero-focus {
         flex-direction: column;
-        gap: 16px;
-    }
-
-    .hero-fb-tagline {
-        text-align: left;
-    }
-
-    .hero-fb-skills {
-        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
     }
 }
 
 @media (max-width: 560px) {
-    .hero-fb-skills {
-        grid-template-columns: 1fr 1fr;
+    /* Grid off on mobile */
+    .hero-fb-section::after {
+        display: none;
     }
 
-    .hero-fb-tagline {
+    /* Tagline hidden on very small screens */
+    .hero-tagline-block {
         display: none;
     }
 
     .hero-fb-title {
-        font-size: clamp(48px, 13vw, 90px);
+        font-size: clamp(50px, 13.5vw, 90px);
+    }
+
+    .hero-scroll-indicator {
+        display: none;
+    }
+
+    .hero-index-item {
+        flex: 1 1 100%;
+    }
+
+    .hero-index-item::after {
+        display: none !important;
+    }
+
+    .hero-annotation--tl {
+        top: 76px;
+    }
+
+    .hero-bottom {
+        padding: 0 5% 44px;
     }
 }
 
+/* ════════════════════════════════════════
+   REDUCED MOTION
+════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+    .hero-dot,
+    .hero-status--init,
+    .hero-status--online::before,
+    .hero-scroll-line {
+        animation: none !important;
+    }
+
+    .hero-fb-title,
+    .hero-title--glitch,
+    .hero-cta-arrow,
+    .hero-fb-cta,
+    .hero-index-item,
+    .hero-index-num,
+    .hero-index-desc,
+    .hero-scroll-indicator,
+    .site-header {
+        transition: none !important;
+    }
+
+    .hero-fb-bg {
+        filter: brightness(0.68) !important;
+        transform: none !important;
+        will-change: auto !important;
+    }
+
+    .hero-diagram-wrap {
+        transform: none !important;
+    }
+}
 
 /* =========================================================
    INTENTSCOPE PROJECT
@@ -2165,9 +2586,7 @@ button {
         --border: #deded5;
     }
 
-    .site-header {
-        background: rgba(8, 9, 11, 0.78);
-    }
+    /* site-header background now controlled by .site-header--scrolled only */
 
     .hero {
         background:
@@ -2209,9 +2628,8 @@ button {
 
 @media (max-width: 900px) {
     .site-header {
-        grid-template-columns: 1fr auto;
-
-        width: calc(100% - 20px);
+        /* flex layout — no grid override needed */
+        padding: 20px 4%;
     }
 
     .desktop-nav {
@@ -3657,23 +4075,7 @@ button {
     color: var(--text) !important;
 }
 
-/* Dynamic header styling */
-.site-header {
-    background: #101010 !important;
-    border: 2px solid var(--border) !important;
-    color: #ffffff !important;
-    box-shadow: 4px 4px 0 var(--border) !important;
-}
-
-.site-header a {
-    color: #ffffff !important;
-}
-
-.site-header .theme-button {
-    border-color: #ffffff !important;
-    color: #ffffff !important;
-    background: transparent !important;
-}
+/* Header colours for scrolled state are handled by .site-header--scrolled */
 
 @media (prefers-color-scheme: light) {
     :root:not([data-theme="dark"]) .hero {
@@ -4105,4 +4507,47 @@ button {
         bottom: 16px;
         left: 16px;
     }
+}
+
+.portfolio-world {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #030303;
+}
+
+.portfolio-world canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.world-enter {
+    position: absolute;
+    left: 50%;
+    bottom: 12%;
+    transform: translateX(-50%);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    color: #ffffff;
+
+    font-family: monospace;
+    letter-spacing: 0.18em;
+
+    pointer-events: none;
+}
+
+.world-enter span {
+    font-size: 11px;
+}
+
+.world-enter small {
+    font-size: 8px;
+    opacity: 0.45;
+    letter-spacing: 0.22em;
 }
