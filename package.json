@@ -17,7 +17,8 @@
     "next": "^16.3.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "three": "^0.180.0"
+    "three": "^0.180.0",
+    "motion": "^12.23.24"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",
